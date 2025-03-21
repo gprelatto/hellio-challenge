@@ -3,7 +3,7 @@ import { typeormData } from 'typeorm.object';
 
 const options = {
   ...typeormData,
-  entities: [__dirname + '/src/**/*.entity{.ts,.js}'],
+  entities: ["src/entity/**/*{.js,.ts}"],
   migrations: [__dirname + '/migrations/*.ts'],
 } as TypeOrmModuleOptions;
 

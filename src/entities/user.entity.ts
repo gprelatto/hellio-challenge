@@ -1,19 +1,21 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
 import { UserCompanyPermission } from './user-company.entity';
+import { Column, Entity, ObjectId, ObjectIdColumn } from 'typeorm';
+import { UserProjectPermission } from './user-project.entity';
 
-@Schema({ collection: 'users', timestamps: true })
-export class User extends Document {
-  @Prop({ required: true })
+@Entity()
+export class User {
+  @ObjectIdColumn()
+  _id: ObjectId;
+
+  @Column({ nullable: false })
   name: string;
 
-  @Prop({ required: true, unique: true })
+  @Column({ unique: true, nullable: false })
   email: string;
 
-  @Prop({ required: true, unique: true })
+  @Column({ nullable: false })
   password: string;  
 
   companyPermissions?: UserCompanyPermission[];
+  projectPermissions?: UserProjectPermission[];
 }
-
-export const UserSchema = SchemaFactory.createForClass(User);

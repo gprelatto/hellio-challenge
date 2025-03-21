@@ -1,5 +1,5 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Column, Entity, ObjectId, ObjectIdColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { Company } from './company.entity';
 
 export enum ProjectStatus {
   ACTIVE = 'Active',
@@ -12,22 +12,26 @@ export enum ProjectPriority {
   LOW = 3,
 }
 
-@Schema({ collection: 'projects', timestamps: true })
-export class Project extends Document {
-  @Prop({ required: true })
+@Entity()
+export class Project {
+  @ObjectIdColumn()
+  _id: ObjectId;
+
+  @Column()
   name: string;
 
-  @Prop()
+  @Column((type) => Company)
+  company: Company
+
+  @Column()
   description?: string;
 
-  @Prop({ required: true, enum: ProjectStatus })
+  @Column({ enum: ProjectStatus })
   status: ProjectStatus;
 
-  @Prop({ enum: ProjectPriority })
+  @Column({ enum: ProjectPriority })
   priority?: ProjectPriority;
 
-  @Prop([String])
+  @Column()
   tags?: string[];
 }
-
-export const ProjectSchema = SchemaFactory.createForClass(Project);

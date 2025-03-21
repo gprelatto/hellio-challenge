@@ -1,18 +1,18 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Column, Entity, ObjectId, ObjectIdColumn, PrimaryGeneratedColumn } from 'typeorm';
 
 export enum UserRole {
   USER = 'user',
   ADMIN = 'admin',
 }
 
-@Schema({ collection: 'companies', timestamps: true })
-export class Company extends Document {
-  @Prop({ required: true })
+@Entity()
+export class Company {
+  @ObjectIdColumn()
+  _id: ObjectId;
+
+  @Column()
   name: string;
 
-  @Prop()
+  @Column()
   industry?: string;
 }
-
-export const CompanySchema = SchemaFactory.createForClass(Company);
