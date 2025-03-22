@@ -57,6 +57,7 @@ npm run start:dev
 ## Configuration
 
 - The application startup port can be configured in the environment files.
+- Using config files (*.yml) per environment. You can create your own DEV/STAGE/PROD/TEST config file inside the config folder.
 - Default access:
   - **API Base URL**: `http://localhost:3000`
   - **API Documentation (Swagger)**: `http://localhost:3000/swagger`
@@ -65,10 +66,27 @@ npm run start:dev
 
 ## API Endpoints
 
-### Authentication Endpoints
+### Auth Workflow
+
+The only publicly accessible endpoints are **Register** and **Login**:
 
 - **Register**: `POST /v1/auth/register`
 - **Login**: `POST /v1/auth/login`
+
+#### Steps:
+
+1. **Register a New User**  
+   Use the `/v1/auth/register` endpoint to create a new user account.
+
+2. **Login to Obtain an Auth Token**  
+   Authenticate with the `/v1/auth/login` endpoint to receive a JWT token.
+
+#### Role-Based Access Control (RBAC)
+
+- The JWT token includes an array of companies the user has access to.
+- Access validation is enforced using **Role Guards** at the controller level.
+
+This ensures secure and role-specific access to the API resources.
 
 ### Company Management Endpoints
 
