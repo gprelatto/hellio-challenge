@@ -96,7 +96,9 @@ The following endpoints are required to complete the challenge:
 
 ### Unit Tests
 
-Right now, I only included an example test for the login/validation method. Just for showing it off. Can add more if needed!
+Two tests included:
+1. Login workflow
+2. Fetch projects for a company
 
 ---
 
