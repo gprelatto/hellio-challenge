@@ -90,27 +90,39 @@ This ensures secure and role-specific access to the API resources.
 
 ### Company Management Endpoints
 
-These endpoints are provided for easier testing and starting:
+The following endpoints are available to facilitate testing and initial setup:
 
-- **Create a Company**: `POST /v1/companies/`
-- **List Companies**: `GET /v1/companies/`
-- **Add a Project to a Company**: `POST /v1/companies/:companyId/project`
+- **Create a Company**:  
+   `POST /v1/companies/`  
+   Automatically assigns the user who creates the company as the owner with full access.
+
+- **List Companies**:  
+   `GET /v1/companies/`  
+   Retrieves a list of all companies.
+
+- **Add a Project to a Company**:  
+   `POST /v1/companies/:companyId/project`  
+   Adds a new project to the specified company.
 
 ### Required Endpoints
 
-The following endpoints are required to complete the challenge:
+These endpoints are essential for completing the challenge:
 
 1. **Get Projects for a Company**:  
-   `GET /v1/companies/:companyId/project`
+    `GET /v1/companies/:companyId/project`  
+    Fetches all projects associated with a specific company.
 
 2. **Update a Project**:  
-   `PATCH /v1/companies/:companyId/project/:projectId`
+    `PATCH /v1/companies/:companyId/project/:projectId`  
+    Updates the details of a specific project within a company.
 
 3. **Add Roles to a Company**:  
-   `POST /v1/companies/:companyId/roles`
+    `POST /v1/companies/:companyId/roles`  
+    Assigns new roles to a company.
 
 4. **Delete Roles from a Company**:  
-   `DELETE /v1/companies/:companyId/roles`
+    `DELETE /v1/companies/:companyId/roles`  
+    Removes roles from a company.
 
 ### Unit Tests
 
