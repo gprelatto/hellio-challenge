@@ -129,6 +129,10 @@ These endpoints are essential for completing the challenge:
 Two tests included:
 1. Login workflow
 2. Fetch projects for a company
+3. Should allow USER to access GET /v1/companies/
+4. Should fail if USER not Authed and try to access GET /v1/companies/
+5. Should allow USER with WRITE access to PATCH /:companyId/project/:projectId
+6. Should deny USER with no WRITE access to PATCH /:companyId/project/:projectId
 
 ---
 

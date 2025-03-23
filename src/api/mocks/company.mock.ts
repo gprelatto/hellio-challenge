@@ -15,6 +15,11 @@ COMPANY_PERMISSON._id = new ObjectId("67dd8633808134cf4979dfc3")
 COMPANY_PERMISSON.company = company;
 COMPANY_PERMISSON.permissions= [ProjectPermission.READ];
 
+export const COMPANY_PERMISSON_WRITE_ADMIN: UserCompanyPermission = new UserCompanyPermission();
+COMPANY_PERMISSON_WRITE_ADMIN._id = new ObjectId("67dd8633808134cf4979dfc3")
+COMPANY_PERMISSON_WRITE_ADMIN.company = company;
+COMPANY_PERMISSON_WRITE_ADMIN.permissions= [ProjectPermission.WRITE, ProjectPermission.ADMIN];
+
 export const USER_USER: User = new User();
 USER_USER._id = new ObjectId("67dd8633808134cf4979dfc3")
 USER_USER.name = 'USER USER';
@@ -27,6 +32,7 @@ USER_ADMIN._id = new ObjectId("67dd8633808134cf4979dfc3")
 USER_ADMIN.name = 'ADMIN USER';
 USER_ADMIN.email = 'admin@helio.com';
 USER_ADMIN.password = '$2b$10$Rl1cChlMDtiGG0hBrVqBIO3MKALOKNxp1uYscVW0VWk4UqEfXdYma';
+USER_ADMIN.companyPermissions = [COMPANY_PERMISSON_WRITE_ADMIN]
 
 export const USER_LIST: User[] = [USER_USER, USER_ADMIN];
 export const COMPANY_PERMISSONS = [COMPANY_PERMISSON]
@@ -74,7 +80,13 @@ class UserRepoMock {
 }
 
 class userCompanyRepoMock {
-  find = jest.fn().mockImplementation(options => {return COMPANY_PERMISSONS});
+  find = jest.fn().mockImplementation(options => {
+    if (options && options.where && options.where['user.email']) {
+      if(options.where["user.email"] === 'user@helio.com') return [COMPANY_PERMISSON]
+      if(options.where["user.email"] === 'admin@helio.com') return [COMPANY_PERMISSON_WRITE_ADMIN]
+    }
+    return COMPANY_PERMISSONS
+  });
   findOne = jest.fn().mockImplementation(options => {return COMPANY_PERMISSON});
 }
 
@@ -99,8 +111,12 @@ class projectRepoMock {
     if (options && options.where && options.where['company._id']) {
       return PROJECT_LIST.find(project => project.company._id.equals(options.where['company._id']));
     }
+    if (options && options.where && options.where['_id']) {
+      return PROJECT_LIST.find(project => project._id.equals(options.where['_id']));
+    }
     return null;
   });
+  save = jest.fn().mockImplementation();
 }
 
 export class DataSourceMock {
