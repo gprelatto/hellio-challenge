@@ -6,6 +6,12 @@ import { ProjectsModule } from './projects/projects.module';
 import { UserCompanyPermissionModule } from './user-company-permissions/user-company-permissons.module';
 
 @Module({
-  imports: [AuthModule, UserModule, CompanyModule, ProjectsModule, UserCompanyPermissionModule],
+  imports: [
+    AuthModule,
+    UserModule,
+    CompanyModule,
+    ProjectsModule,
+    UserCompanyPermissionModule,
+  ],
 })
 export class ApiModule {}

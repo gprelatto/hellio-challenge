@@ -1,6 +1,13 @@
 import { ProjectPriority, ProjectStatus } from '@/schemas/project.schema';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsOptional, MaxLength, IsEmail, IsArray, IsEnum } from 'class-validator';
+import {
+  IsString,
+  IsOptional,
+  MaxLength,
+  IsEmail,
+  IsArray,
+  IsEnum,
+} from 'class-validator';
 
 export class CreateCompanyDTO {
   @ApiProperty()
@@ -27,18 +34,18 @@ export class CreateProjectDTO {
   @MaxLength(250)
   description?: string;
 
-  @ApiProperty({enum: ProjectStatus, default: ProjectStatus.ACTIVE})
+  @ApiProperty({ enum: ProjectStatus, default: ProjectStatus.ACTIVE })
   @IsEnum(ProjectStatus)
   status: ProjectStatus;
 
-  @ApiProperty({enum: ProjectPriority, default: ProjectPriority.MEDIUM})
+  @ApiProperty({ enum: ProjectPriority, default: ProjectPriority.MEDIUM })
   @IsOptional()
   @IsEnum(ProjectPriority)
   priority?: ProjectPriority;
 
   @IsArray()
   @IsOptional()
-  @ApiProperty({default: []})
+  @ApiProperty({ default: [] })
   tags?: string[];
 }
 
@@ -55,18 +62,18 @@ export class UpdateProjectDTO {
   @MaxLength(250)
   description?: string;
 
-  @ApiProperty({enum: ProjectStatus, default: ProjectStatus.ACTIVE})
+  @ApiProperty({ enum: ProjectStatus, default: ProjectStatus.ACTIVE })
   @IsOptional()
   @IsEnum(ProjectStatus)
   status?: ProjectStatus;
 
-  @ApiProperty({enum: ProjectPriority, default: ProjectPriority.MEDIUM})
+  @ApiProperty({ enum: ProjectPriority, default: ProjectPriority.MEDIUM })
   @IsOptional()
   @IsEnum(ProjectPriority)
   priority?: ProjectPriority;
 
   @IsArray()
   @IsOptional()
-  @ApiProperty({default: []})
+  @ApiProperty({ default: [] })
   tags?: string[];
 }

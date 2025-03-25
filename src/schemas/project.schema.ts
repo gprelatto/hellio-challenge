@@ -18,7 +18,7 @@ export type ProjectDocument = HydratedDocument<Project>;
 
 @Schema()
 export class Project {
-  _id: { type: mongoose.Schema.Types.Mixed, required: true };
+  _id: { type: mongoose.Schema.Types.Mixed; required: true };
 
   @Prop()
   name: string;

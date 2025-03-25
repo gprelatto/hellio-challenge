@@ -7,7 +7,10 @@ import { UserCompanyPermissonsService } from '../user-company-permissions/user-c
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(private usersService: UsersService, private userCompanyPermissionsService: UserCompanyPermissonsService) {
+  constructor(
+    private usersService: UsersService,
+    private userCompanyPermissionsService: UserCompanyPermissonsService,
+  ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: JWT_SECRET || 'your_jwt_secret',
@@ -17,12 +20,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   async validate(payload: any) {
     const user = await this.usersService.findById(payload.id);
     if (!user) return null;
-    
-    const companyPermissions = await this.userCompanyPermissionsService.getUserCompanyRoles(payload.id);
-  
+
+    const companyPermissions =
+      await this.userCompanyPermissionsService.getUserCompanyRoles(payload.id);
+
     return {
       email: user.email,
-      companyPermissions
+      companyPermissions,
     };
   }
 }

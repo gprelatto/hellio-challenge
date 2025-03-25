@@ -6,7 +6,7 @@ export type CompanyDocument = HydratedDocument<Company>;
 
 @Schema()
 export class Company {
-  _id: { type: mongoose.Schema.Types.Mixed, required: true };
+  _id: { type: mongoose.Schema.Types.Mixed; required: true };
 
   @Prop()
   name: string;

@@ -8,7 +8,9 @@ import { HttpExceptionFilter } from './api/error-handler/http-exception.filter';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
-  const app: NestExpressApplication = await NestFactory.create(AppModule, { bufferLogs: true });
+  const app: NestExpressApplication = await NestFactory.create(AppModule, {
+    bufferLogs: true,
+  });
   const port: number = PORT;
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
@@ -17,7 +19,9 @@ async function bootstrap() {
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Helio Challenge')
-    .setDescription('[Gonzalo Prelatto] - NodeJS Task for handling projects with auth')
+    .setDescription(
+      '[Gonzalo Prelatto] - NodeJS Task for handling projects with auth',
+    )
     .setVersion('1.0')
     .addBearerAuth(
       {
@@ -28,7 +32,7 @@ async function bootstrap() {
         type: 'http',
         in: 'Header',
       },
-      'access-token'
+      'access-token',
     )
     .build();
 

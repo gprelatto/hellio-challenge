@@ -1,10 +1,19 @@
-import { Controller, Post, Body, Request, UseGuards, Param, Get, Patch, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Request,
+  UseGuards,
+  Param,
+  Get,
+  Patch,
+  Delete,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CompanyService } from './companies.service';
 import { CreateCompanyDTO } from './companies.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { Company } from '@/schemas/company.schema';
-
 
 @ApiTags('Companies')
 @Controller('v1/companies')
@@ -15,14 +24,17 @@ export class CompanyController {
   @ApiOperation({ summary: 'Creates a company' })
   @Post('/')
   @ApiBearerAuth('access-token')
-  async createCompany(@Request() req, @Body() companyData: CreateCompanyDTO) : Promise<Company> {
+  async createCompany(
+    @Request() req,
+    @Body() companyData: CreateCompanyDTO,
+  ): Promise<Company> {
     return this.companiesService.createCompany(req.user.email, companyData);
   }
 
   @ApiOperation({ summary: 'Get lists of companies' })
   @Get('/')
   @ApiBearerAuth('access-token')
-  async getCompanies() : Promise<Company[]> {
+  async getCompanies(): Promise<Company[]> {
     return this.companiesService.getCompanies();
   }
 }

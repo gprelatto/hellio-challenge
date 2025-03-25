@@ -11,21 +11,22 @@ export enum ProjectPermission {
   ADMIN = 'Admin',
 }
 
-
 export type UserDocument = HydratedDocument<UserCompanyPermission>;
 
 @Schema()
 export class UserCompanyPermission {
-  _id: { type: mongoose.Schema.Types.Mixed, required: true };
+  _id: { type: mongoose.Schema.Types.Mixed; required: true };
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-  user: User
+  user: User;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Company' })
-  company: Company
+  company: Company;
 
   @Prop()
   permissions: ProjectPermission[];
 }
 
-export const UserCompanyPermissionSchema = SchemaFactory.createForClass(UserCompanyPermission);
+export const UserCompanyPermissionSchema = SchemaFactory.createForClass(
+  UserCompanyPermission,
+);

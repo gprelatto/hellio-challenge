@@ -5,27 +5,31 @@ import { Model, Types } from 'mongoose';
 
 @Injectable()
 export class UsersService {
-  constructor(
-      @InjectModel(User.name) private userModel: Model<User>,
-  ) {}
+  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
   async checkEmailExist(email: string): Promise<User | null> {
-    const user = await this.userModel.findOne({email}).exec();
-    if (user) throw new HttpException('User with this email already exists.', HttpStatus.CONFLICT);
-    return user
-  } 
-  
+    const user = await this.userModel.findOne({ email }).exec();
+    if (user)
+      throw new HttpException(
+        'User with this email already exists.',
+        HttpStatus.CONFLICT,
+      );
+    return user;
+  }
+
   async findByEmail(email: string): Promise<User | null> {
-    const user = await this.userModel.findOne({email}).exec();
+    const user = await this.userModel.findOne({ email }).exec();
     if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-    return user
-  } 
-  
+    return user;
+  }
+
   async findById(id: string): Promise<User | null> {
-    const user = await this.userModel.findOne({_id : new Types.ObjectId(id)}).exec();
+    const user = await this.userModel
+      .findOne({ _id: new Types.ObjectId(id) })
+      .exec();
     if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-    return user
-  } 
+    return user;
+  }
 
   async createUser(userData: Partial<User>): Promise<User> {
     const createdUser = new this.userModel(userData);

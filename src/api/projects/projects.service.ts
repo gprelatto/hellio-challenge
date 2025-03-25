@@ -8,12 +8,12 @@ import { Model } from 'mongoose';
 @Injectable()
 export class ProjectService {
   constructor(
-    @InjectModel(Project.name) private projectModel: Model<Project>
+    @InjectModel(Project.name) private projectModel: Model<Project>,
   ) {}
 
   @Inject(CompanyService)
   private readonly companyService: CompanyService;
-  
+
   async createProject(
     companyId: string,
     project: Partial<Project>,
@@ -47,7 +47,7 @@ export class ProjectService {
   async findProjects(companyId: string): Promise<Project[]> {
     await this.companyService.findCompany(companyId);
     return this.projectModel
-      .find({ company : new Types.ObjectId(companyId) })
+      .find({ company: new Types.ObjectId(companyId) })
       .exec();
   }
 }

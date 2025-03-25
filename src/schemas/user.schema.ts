@@ -7,7 +7,7 @@ export type UserDocument = HydratedDocument<User>;
 
 @Schema()
 export class User {
-  _id: { type: mongoose.Schema.Types.Mixed, required: true };
+  _id: { type: mongoose.Schema.Types.Mixed; required: true };
 
   @Prop()
   name: string;
