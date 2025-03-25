@@ -2,19 +2,6 @@ import { ProjectPriority, ProjectStatus } from '@/schemas/project.schema';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsOptional, MaxLength, IsEmail, IsArray, IsEnum } from 'class-validator';
 
-export class CreateCompanyDTO {
-  @ApiProperty()
-  @IsString()
-  @MaxLength(100)
-  name: string;
-
-  @ApiProperty()
-  @IsOptional()
-  @IsString()
-  @MaxLength(100)
-  industry?: string;
-}
-
 export class CreateProjectDTO {
   @ApiProperty()
   @IsString()

@@ -1,7 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from './roles.decorator';
-import { User } from '@/entities/user.entity';
+import { User } from '@/schemas/user.schema';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -16,7 +16,7 @@ export class RolesGuard implements CanActivate {
 
     const request = context.switchToHttp().getRequest();
     const user: User = request.user;
-    // company level handler
+    if(!user.companyPermissions) return false;
     for (const permisson of user.companyPermissions) {
       if (
         request.params.companyId &&

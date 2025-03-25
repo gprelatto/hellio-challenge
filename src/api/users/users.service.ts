@@ -1,31 +1,34 @@
-import { Injectable } from '@nestjs/common';
-import { UserCompanyPermission } from '../../entities/user-company.entity';
-import { DataSource } from 'typeorm';
-import { User } from '../../entities/user.entity';
-import { UserProjectPermission } from '../../entities/user-project.entity';
+import { User } from '@/schemas/user.schema';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model, Types } from 'mongoose';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly dataSource: DataSource) {}
+  constructor(
+      @InjectModel(User.name) private userModel: Model<User>,
+  ) {}
 
-  private userRepository = this.dataSource.getMongoRepository(User);
-  private userCompanyPermissionRepository = this.dataSource.getMongoRepository(UserCompanyPermission);
-  private userProjectPermissionRepository = this.dataSource.getMongoRepository(UserProjectPermission);
-
-
-  async getCompanyPermissons(email: string): Promise<UserCompanyPermission[]> {
-    return this.userCompanyPermissionRepository.find({ where : { "user.email": email } });
-  }
-
-  async getProjectPermissons(email: string): Promise<UserProjectPermission[]> {
-    return this.userProjectPermissionRepository.find({ where : { "user.email": email } });
-  }
-  
-  async findByEmail(email: string): Promise<User | null> {
-    return this.userRepository.findOne({where : {email}})
+  async checkEmailExist(email: string): Promise<User | null> {
+    const user = await this.userModel.findOne({email}).exec();
+    if (user) throw new HttpException('User with this email already exists.', HttpStatus.CONFLICT);
+    return user
   } 
   
+  async findByEmail(email: string): Promise<User | null> {
+    const user = await this.userModel.findOne({email}).exec();
+    if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    return user
+  } 
+  
+  async findById(id: string): Promise<User | null> {
+    const user = await this.userModel.findOne({_id : new Types.ObjectId(id)}).exec();
+    if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    return user
+  } 
+
   async createUser(userData: Partial<User>): Promise<User> {
-    return this.userRepository.save(userData);;
+    const createdUser = new this.userModel(userData);
+    return createdUser.save();
   }
 }

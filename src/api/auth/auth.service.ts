@@ -1,18 +1,25 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDTO } from './auth.dto';
 import { UsersService } from '../users/users.service';
-import { User } from '@/entities/user.entity';
+import { User } from '@/schemas/user.schema';
+import { UserCompanyPermissonsService } from '../user-company-permissions/user-company-permissons.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private usersService: UsersService, private jwtService: JwtService) {}
+  constructor(private jwtService: JwtService) {}
+
+  @Inject(UsersService)
+  private readonly userService: UsersService;
+
+  @Inject(UserCompanyPermissonsService)
+  private readonly userCompanyPermissionsService: UserCompanyPermissonsService;
 
   async validateUser(email: string, password: string): Promise<User | null> {
-    const user = await this.usersService.findByEmail(email);
+    const user = await this.userService.findByEmail(email);
     if (user && (await bcrypt.compare(password, user.password))) {
-      const permissions = await this.usersService.getCompanyPermissons(user.email);
+      const permissions = await this.userCompanyPermissionsService.getUserCompanyRoles(user._id.toString());
       user.companyPermissions = permissions;
       return user;
     }
@@ -20,17 +27,16 @@ export class AuthService {
   }
 
   async login(user: User) {
-    const payload = { email: user.email, companyPermissions: user.companyPermissions };
+    const payload = { id: user._id, companyPermissions: user.companyPermissions };
     return {
       access_token: this.jwtService.sign(payload),
     };
   }
 
   async register(user: CreateUserDTO) {
-    const existentUser = await this.usersService.findByEmail(user.email);
-    if (existentUser) throw new HttpException('User with this email already exists.', HttpStatus.CONFLICT);
+    await this.userService.checkEmailExist(user.email);
     const hashedPassword = await bcrypt.hash(user.password, 10);
     user.password = hashedPassword;
-    return this.usersService.createUser(user);
+    return this.userService.createUser(user);
   }
 }
