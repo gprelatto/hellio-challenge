@@ -1,4 +1,4 @@
-import { User } from '@/schemas/user.schema';
+import { User } from '../../schemas/user.schema';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
@@ -19,7 +19,7 @@ export class UsersService {
 
   async findByEmail(email: string): Promise<User | null> {
     const user = await this.userModel.findOne({ email }).exec();
-    if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    if (!user) throw new HttpException('User not found: ' + email, HttpStatus.NOT_FOUND);
     return user;
   }
 
@@ -27,7 +27,7 @@ export class UsersService {
     const user = await this.userModel
       .findOne({ _id: new Types.ObjectId(id) })
       .exec();
-    if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    if (!user) throw new HttpException('User not found: ' +id, HttpStatus.NOT_FOUND);
     return user;
   }
 

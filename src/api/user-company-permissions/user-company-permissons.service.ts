@@ -1,12 +1,12 @@
 import {
   ProjectPermission,
   UserCompanyPermission,
-} from '@/schemas/user-company.schema';
+} from '../../schemas/user-company.schema';
 import { HttpException, Inject, Injectable } from '@nestjs/common';
 import { CompanyService } from '../companies/companies.service';
 import { UsersService } from '../users/users.service';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class UserCompanyPermissonsService {

@@ -1,4 +1,4 @@
-import { ProjectPermission } from '@/schemas/user-company.schema';
+import { ProjectPermission } from '../../schemas/user-company.schema';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsArray, IsEmail, IsString, MaxLength } from 'class-validator';
 

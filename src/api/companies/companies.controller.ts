@@ -4,16 +4,13 @@ import {
   Body,
   Request,
   UseGuards,
-  Param,
   Get,
-  Patch,
-  Delete,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CompanyService } from './companies.service';
 import { CreateCompanyDTO } from './companies.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { Company } from '@/schemas/company.schema';
+import { Company } from '../../schemas/company.schema';
 
 @ApiTags('Companies')
 @Controller('v1/companies')

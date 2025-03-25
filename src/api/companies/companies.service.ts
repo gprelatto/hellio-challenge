@@ -2,10 +2,10 @@ import { forwardRef, HttpException, Inject, Injectable } from '@nestjs/common';
 import { Types } from 'mongoose';
 import { UsersService } from '../users/users.service';
 import { InjectModel } from '@nestjs/mongoose';
-import { Company } from '@/schemas/company.schema';
+import { Company } from '../../schemas/company.schema';
 import { Model } from 'mongoose';
 import { UserCompanyPermissonsService } from '../user-company-permissions/user-company-permissons.service';
-import { ProjectPermission } from '@/schemas/user-company.schema';
+import { ProjectPermission } from '../../schemas/user-company.schema';
 
 @Injectable()
 export class CompanyService {

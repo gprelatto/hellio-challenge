@@ -13,7 +13,7 @@ import { Roles } from '../guards/roles.decorator';
 import {
   ProjectPermission,
   UserCompanyPermission,
-} from '@/schemas/user-company.schema';
+} from '../../schemas/user-company.schema';
 import { HandleRoleDTO } from './user-company-permissons.dto';
 import { UserCompanyPermissonsService } from './user-company-permissons.service';
 
@@ -28,7 +28,7 @@ export class UserCompanyPermissonsController {
   @ApiOperation({
     summary: '[Task 3] Add access to another user access to resource.',
   })
-  @Post('/:companyId/roles')
+  @Post('/:companyId')
   @ApiBearerAuth('access-token')
   @Roles(ProjectPermission.ADMIN)
   async AddRole(
@@ -45,7 +45,7 @@ export class UserCompanyPermissonsController {
   @ApiOperation({
     summary: '[Task 4] Remove access to another user access to resource.',
   })
-  @Delete('/:companyId/roles')
+  @Delete('/:companyId')
   @ApiBearerAuth('access-token')
   @Roles(ProjectPermission.ADMIN)
   async RemoveRole(
