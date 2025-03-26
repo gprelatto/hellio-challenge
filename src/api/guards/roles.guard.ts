@@ -1,11 +1,14 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from './roles.decorator';
-import { User } from '@/schemas/user.schema';
+import { PermissionService } from '../permissions/permission.service';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-  constructor(private reflector: Reflector) {}
+  constructor(
+    private reflector: Reflector,
+    private permissionService: PermissionService,
+  ) {}
 
   canActivate(context: ExecutionContext): boolean {
     const requiredRoles = this.reflector.get<string[]>(
@@ -15,18 +18,8 @@ export class RolesGuard implements CanActivate {
     if (!requiredRoles) return true;
 
     const request = context.switchToHttp().getRequest();
-    const user: User = request.user;
-    if (!user.companyPermissions) return false;
-    for (const permisson of user.companyPermissions) {
-      if (
-        request.params.companyId &&
-        permisson.company._id == request.params.companyId
-      ) {
-        for (const role of permisson.permissions) {
-          if (requiredRoles.includes(role)) return true;
-        }
-      }
-    }
-    return false;
+    const user = request.user;
+
+    return this.permissionService.hasPermissions(user, request.params.companyId, requiredRoles);
   }
 }

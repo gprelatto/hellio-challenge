@@ -124,15 +124,17 @@ These endpoints are essential for completing the challenge:
     `DELETE /v1/companies/:companyId/roles`  
     Removes roles from a company.
 
-### Unit Tests
+### Tests:
+- should reject not authed call
+- should allow USER with ADMIN rights to access POST /v1/roles/:id
+- should not allow USER without ADMIN rights to access POST /v1/roles/:id
 
-Two tests included:
-1. Login workflow
-2. Fetch projects for a company
-3. Should allow USER to access GET /v1/companies/
-4. Should fail if USER not Authed and try to access GET /v1/companies/
-5. Should allow USER with WRITE access to PATCH /:companyId/project/:projectId
-6. Should deny USER with no WRITE access to PATCH /:companyId/project/:projectId
+### [2025-03-25] Edits based on review/feedback:
+1. Replaced Typeorm by Mongoose -> Native support, better schema validation, more efficient query building.
+2. Implemented native class-validator for email and applied a password policy : `minLength: 8, minLowercase: 1, minNumbers: 1, minSymbols: 1, minUppercase: 1`
+3. Applied changes into companies module to be more aligned with NestJS design pattern -> Decoupled it into 3 modules: `Companies, Projects, User Company Permissons (roles)`
+4. Decoupled role ward and moved it into a service, so it would be easier to extend in the future. Maybe another good approach would be to use a middleware to intercept specific calls, open to change it if needed.
+5. Regarding permissons: It is not clear on the request if they are needed at Company or Company+Project level. Right now, its implemented at Company level. Open to change if needed.
 
 ---
 
