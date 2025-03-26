@@ -27,6 +27,4 @@ export class UserCompanyPermission {
   permissions: ProjectPermission[];
 }
 
-export const UserCompanyPermissionSchema = SchemaFactory.createForClass(
-  UserCompanyPermission,
-);
+export const UserCompanyPermissionSchema = SchemaFactory.createForClass(UserCompanyPermission);

@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Body,
-  UseGuards,
-  Param,
-  Get,
-  Patch,
-  Post,
-} from '@nestjs/common';
+import { Controller, Body, UseGuards, Param, Get, Patch, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateProjectDTO, UpdateProjectDTO } from './projects.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -26,16 +18,12 @@ export class ProjectController {
   @Post('company/:companyId/project')
   @ApiBearerAuth('access-token')
   @Roles(ProjectPermission.WRITE)
-  async createProject(
-    @Param('companyId') id: string,
-    @Body() project: CreateProjectDTO,
-  ): Promise<Project> {
+  async createProject(@Param('companyId') id: string, @Body() project: CreateProjectDTO): Promise<Project> {
     return this.projectService.createProject(id, project);
   }
 
   @ApiOperation({
-    summary:
-      '[Task 1] Fetch all Projects for a company for a user that has access to.',
+    summary: '[Task 1] Fetch all Projects for a company for a user that has access to.',
   })
   @Get('company/:companyId')
   @ApiBearerAuth('access-token')
@@ -45,17 +33,12 @@ export class ProjectController {
   }
 
   @ApiOperation({
-    summary:
-      '[Task 2] Edit a single Project from a company they have access to.',
+    summary: '[Task 2] Edit a single Project from a company they have access to.',
   })
   @Patch('company/:companyId/project/:projectId')
   @ApiBearerAuth('access-token')
   @Roles(ProjectPermission.WRITE)
-  async updateProject(
-    @Param('companyId') companyId: string,
-    @Param('projectId') projectId: string,
-    @Body() projectData: UpdateProjectDTO,
-  ): Promise<Project> {
+  async updateProject(@Param('companyId') companyId: string, @Param('projectId') projectId: string, @Body() projectData: UpdateProjectDTO): Promise<Project> {
     return this.projectService.updateProject(companyId, projectId, projectData);
   }
 }

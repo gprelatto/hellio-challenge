@@ -12,11 +12,7 @@ export interface ErrorResponse {
 export class BaseExceptionFilter {
   protected readonly logger: Logger = new Logger(this.constructor.name);
 
-  protected logError(
-    error: Error,
-    request: Request,
-    responseError: ErrorResponse,
-  ) {
+  protected logError(error: Error, request: Request, responseError: ErrorResponse) {
     const { name, constructor, stack } = error;
     const { status, detail, meta } = responseError;
 
@@ -29,7 +25,7 @@ export class BaseExceptionFilter {
         stack,
         status,
         path: request.url,
-      }),
+      })
     );
   }
 }

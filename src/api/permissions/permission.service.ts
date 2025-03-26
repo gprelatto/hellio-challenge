@@ -7,10 +7,7 @@ export class PermissionService {
     if (!user.companyPermissions) return false;
 
     for (const permission of user.companyPermissions) {
-      if (
-        String(permission.company._id) === companyId &&
-        permission.permissions.some((role) => requiredRoles.includes(role))
-      ) {
+      if (String(permission.company._id) === companyId && permission.permissions.some(role => requiredRoles.includes(role))) {
         return true;
       }
     }

@@ -19,10 +19,7 @@ export class AuthService {
   async validateUser(email: string, password: string): Promise<User | null> {
     const user = await this.userService.findByEmail(email);
     if (user && (await bcrypt.compare(password, user.password))) {
-      const permissions =
-        await this.userCompanyPermissionsService.getUserCompanyRoles(
-          user._id.toString(),
-        );
+      const permissions = await this.userCompanyPermissionsService.getUserCompanyRoles(user._id.toString());
       user.companyPermissions = permissions;
       return user;
     }

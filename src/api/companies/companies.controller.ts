@@ -1,11 +1,4 @@
-import {
-  Controller,
-  Post,
-  Body,
-  Request,
-  UseGuards,
-  Get,
-} from '@nestjs/common';
+import { Controller, Post, Body, Request, UseGuards, Get } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CompanyService } from './companies.service';
 import { CreateCompanyDTO } from './companies.dto';
@@ -21,10 +14,7 @@ export class CompanyController {
   @ApiOperation({ summary: 'Creates a company' })
   @Post('/')
   @ApiBearerAuth('access-token')
-  async createCompany(
-    @Request() req,
-    @Body() companyData: CreateCompanyDTO,
-  ): Promise<Company> {
+  async createCompany(@Request() req, @Body() companyData: CreateCompanyDTO): Promise<Company> {
     return this.companiesService.createCompany(req.user.email, companyData);
   }
 

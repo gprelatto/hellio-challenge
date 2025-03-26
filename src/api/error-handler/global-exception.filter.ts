@@ -1,9 +1,4 @@
-import {
-  Catch,
-  ExceptionFilter,
-  ArgumentsHost,
-  HttpStatus,
-} from '@nestjs/common';
+import { Catch, ExceptionFilter, ArgumentsHost, HttpStatus } from '@nestjs/common';
 import { BaseExceptionFilter, ErrorResponse } from './base-exception.filter';
 
 type ErrorWithResponse = Error & {
@@ -11,18 +6,14 @@ type ErrorWithResponse = Error & {
 };
 
 @Catch()
-export class GlobalExceptionFilter
-  extends BaseExceptionFilter
-  implements ExceptionFilter
-{
+export class GlobalExceptionFilter extends BaseExceptionFilter implements ExceptionFilter {
   async catch(error: ErrorWithResponse, host: ArgumentsHost) {
     const context = host.switchToHttp();
     const response = context.getResponse();
 
     const status = error.response?.status || HttpStatus.INTERNAL_SERVER_ERROR;
     const title = error.name || 'Unhandled Exception';
-    const detail =
-      error.response?.data?.message || error.message || 'Unhandled Exception';
+    const detail = error.response?.data?.message || error.message || 'Unhandled Exception';
 
     const responseError: ErrorResponse = {
       status,

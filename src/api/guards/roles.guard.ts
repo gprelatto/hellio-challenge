@@ -7,14 +7,11 @@ import { PermissionService } from '../permissions/permission.service';
 export class RolesGuard implements CanActivate {
   constructor(
     private reflector: Reflector,
-    private permissionService: PermissionService,
+    private permissionService: PermissionService
   ) {}
 
   canActivate(context: ExecutionContext): boolean {
-    const requiredRoles = this.reflector.get<string[]>(
-      ROLES_KEY,
-      context.getHandler(),
-    );
+    const requiredRoles = this.reflector.get<string[]>(ROLES_KEY, context.getHandler());
     if (!requiredRoles) return true;
 
     const request = context.switchToHttp().getRequest();

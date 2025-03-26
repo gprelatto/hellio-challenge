@@ -9,9 +9,7 @@ import { ProjectPermission } from '../../schemas/user-company.schema';
 
 @Injectable()
 export class CompanyService {
-  constructor(
-    @InjectModel(Company.name) private companyModel: Model<Company>,
-  ) {}
+  constructor(@InjectModel(Company.name) private companyModel: Model<Company>) {}
 
   @Inject(UsersService)
   private readonly userService: UsersService;
@@ -24,32 +22,18 @@ export class CompanyService {
   }
 
   async findCompany(id: string): Promise<Company> {
-    const company = await this.companyModel
-      .findOne({ _id: new Types.ObjectId(id) })
-      .exec();
+    const company = await this.companyModel.findOne({ _id: new Types.ObjectId(id) }).exec();
     if (!company) throw new HttpException('Company not found', 404);
     return company;
   }
 
-  async createCompany(
-    email: string,
-    companyData: Partial<Company>,
-  ): Promise<Company> {
+  async createCompany(email: string, companyData: Partial<Company>): Promise<Company> {
     const createdCompany = new this.companyModel(companyData);
     await createdCompany.save();
 
     const user = await this.userService.findByEmail(email);
 
-    await this.userCompanyPermissionsService.addRole(
-      user.email,
-      createdCompany._id.toString(),
-      [
-        ProjectPermission.ADMIN,
-        ProjectPermission.DELETE,
-        ProjectPermission.READ,
-        ProjectPermission.WRITE,
-      ],
-    );
+    await this.userCompanyPermissionsService.addRole(user.email, createdCompany._id.toString(), [ProjectPermission.ADMIN, ProjectPermission.DELETE, ProjectPermission.READ, ProjectPermission.WRITE]);
 
     return createdCompany;
   }

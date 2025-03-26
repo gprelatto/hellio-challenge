@@ -6,10 +6,7 @@ import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
 import { AuthController } from './auth.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import {
-  UserCompanyPermission,
-  UserCompanyPermissionSchema,
-} from '@/schemas/user-company.schema';
+import { UserCompanyPermission, UserCompanyPermissionSchema } from '@/schemas/user-company.schema';
 import { Company, CompanySchema } from '@/schemas/company.schema';
 import { User, UserSchema } from '@/schemas/user.schema';
 import { UserModule } from '../users/users.module';

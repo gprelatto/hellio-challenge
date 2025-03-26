@@ -9,11 +9,7 @@ export class UsersService {
 
   async checkEmailExist(email: string): Promise<User | null> {
     const user = await this.userModel.findOne({ email }).exec();
-    if (user)
-      throw new HttpException(
-        'User with this email already exists.',
-        HttpStatus.CONFLICT,
-      );
+    if (user) throw new HttpException('User with this email already exists.', HttpStatus.CONFLICT);
     return user;
   }
 
@@ -24,10 +20,8 @@ export class UsersService {
   }
 
   async findById(id: string): Promise<User | null> {
-    const user = await this.userModel
-      .findOne({ _id: new Types.ObjectId(id) })
-      .exec();
-    if (!user) throw new HttpException('User not found: ' +id, HttpStatus.NOT_FOUND);
+    const user = await this.userModel.findOne({ _id: new Types.ObjectId(id) }).exec();
+    if (!user) throw new HttpException('User not found: ' + id, HttpStatus.NOT_FOUND);
     return user;
   }
 

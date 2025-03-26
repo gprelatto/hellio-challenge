@@ -19,9 +19,7 @@ async function bootstrap() {
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Helio Challenge')
-    .setDescription(
-      '[Gonzalo Prelatto] - NodeJS Task for handling projects with auth',
-    )
+    .setDescription('[Gonzalo Prelatto] - NodeJS Task for handling projects with auth')
     .setVersion('1.0')
     .addBearerAuth(
       {
@@ -32,7 +30,7 @@ async function bootstrap() {
         type: 'http',
         in: 'Header',
       },
-      'access-token',
+      'access-token'
     )
     .build();
 

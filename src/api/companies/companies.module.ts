@@ -3,10 +3,7 @@ import { CompanyService } from './companies.service';
 import { CompanyController } from './companies.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Company, CompanySchema } from '../../schemas/company.schema';
-import {
-  UserCompanyPermission,
-  UserCompanyPermissionSchema,
-} from '../../schemas/user-company.schema';
+import { UserCompanyPermission, UserCompanyPermissionSchema } from '../../schemas/user-company.schema';
 import { User, UserSchema } from '../../schemas/user.schema';
 import { Project, ProjectSchema } from '../../schemas/project.schema';
 import { UserModule } from '../users/users.module';

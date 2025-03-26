@@ -83,7 +83,7 @@ describe('UserCompanyPermissonsController', () => {
     jest.spyOn(userService, 'findById').mockReturnValue(Promise.resolve(findUserAdmin as any));
     jest.spyOn(userService, 'findByEmail').mockReturnValue(Promise.resolve(findUserAdmin as any));
     jest.spyOn(service, 'getUserCompanyRoles').mockReturnValue(Promise.resolve(rolesAdmin as any));
-    
+
     const admin = await authService.validateUser('admin@helio.com', 'Inicio.es1');
     const adminResponse = await authService.login(admin);
     adminToken = adminResponse.access_token;

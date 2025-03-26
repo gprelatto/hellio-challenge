@@ -1,9 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import {
-  UserCompanyPermission,
-  UserCompanyPermissionSchema,
-} from '../../schemas/user-company.schema';
+import { UserCompanyPermission, UserCompanyPermissionSchema } from '../../schemas/user-company.schema';
 import { UserCompanyPermissonsService } from './user-company-permissons.service';
 import { Company, CompanySchema } from '../../schemas/company.schema';
 import { User, UserSchema } from '../../schemas/user.schema';

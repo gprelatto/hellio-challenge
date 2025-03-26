@@ -4,10 +4,7 @@ import { ProjectService } from './projects.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Project, ProjectSchema } from '@/schemas/project.schema';
 import { CompanyService } from '../companies/companies.service';
-import {
-  UserCompanyPermission,
-  UserCompanyPermissionSchema,
-} from '@/schemas/user-company.schema';
+import { UserCompanyPermission, UserCompanyPermissionSchema } from '@/schemas/user-company.schema';
 import { Company, CompanySchema } from '@/schemas/company.schema';
 import { User, UserSchema } from '@/schemas/user.schema';
 import { CompanyModule } from '../companies/companies.module';

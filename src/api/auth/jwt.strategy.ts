@@ -9,7 +9,7 @@ import { UserCompanyPermissonsService } from '../user-company-permissions/user-c
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     private usersService: UsersService,
-    private userCompanyPermissionsService: UserCompanyPermissonsService,
+    private userCompanyPermissionsService: UserCompanyPermissonsService
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -21,8 +21,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     const user = await this.usersService.findById(payload.id);
     if (!user) return null;
 
-    const companyPermissions =
-      await this.userCompanyPermissionsService.getUserCompanyRoles(payload.id);
+    const companyPermissions = await this.userCompanyPermissionsService.getUserCompanyRoles(payload.id);
 
     return {
       email: user.email,
