@@ -7,6 +7,7 @@ import { User, UserSchema } from '../../schemas/user.schema';
 import { UserModule } from '../users/users.module';
 import { CompanyModule } from '../companies/companies.module';
 import { UserCompanyPermissonsController } from './user-company-permissons.controller';
+import { PermissionService } from '../permissions/permission.service';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { UserCompanyPermissonsController } from './user-company-permissons.contr
     CompanyModule,
   ],
   controllers: [UserCompanyPermissonsController],
-  providers: [UserCompanyPermissonsService],
+  providers: [UserCompanyPermissonsService, PermissionService],
   exports: [UserCompanyPermissonsService],
 })
 export class UserCompanyPermissionModule {}

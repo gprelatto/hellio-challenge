@@ -8,6 +8,7 @@ import { UserCompanyPermission, UserCompanyPermissionSchema } from '@/schemas/us
 import { Company, CompanySchema } from '@/schemas/company.schema';
 import { User, UserSchema } from '@/schemas/user.schema';
 import { CompanyModule } from '../companies/companies.module';
+import { PermissionService } from '../permissions/permission.service';
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import { CompanyModule } from '../companies/companies.module';
     CompanyModule,
   ],
   controllers: [ProjectController],
-  providers: [ProjectService],
+  providers: [ProjectService, PermissionService],
   exports: [ProjectService],
 })
 export class ProjectsModule {}
